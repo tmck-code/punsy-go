@@ -16,4 +16,6 @@ func main() {
 		fmt.Println(char)
 		current = current.Children[char]
 	}
+	n := t.Get("car")
+	fmt.Printf("%+v\n", n)
 }

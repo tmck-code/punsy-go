@@ -41,19 +41,6 @@ func (n Node) Repr() {
 	}
 }
 
-func (t Trie) Repr() {
-	current := t.Root
-	for {
-		current.Repr()
-		for _, child := range current.Children {
-			child.Repr()
-		}
-		if current.Final {
-			break
-		}
-	}
-}
-
 func (t Trie) Insert(s string) {
 	current := t.Root
 	for i, char := range s {
@@ -68,3 +55,14 @@ func (t Trie) Insert(s string) {
 	}
 }
 
+func (t Trie) Get(s string) *Node {
+	current := t.Root
+	for _, char := range s {
+		if _, ok := current.Children[char]; ok {
+			current = current.Children[char]
+		} else {
+			log.Fatal(s)
+		}
+	}
+	return current
+}
