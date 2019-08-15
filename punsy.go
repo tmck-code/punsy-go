@@ -6,8 +6,14 @@ import (
 )
 
 func main() {
-	t := new(Struct.Trie)
+	t := Struct.NewTrie()
 	msg := "car"
 	fmt.Println(msg)
 	t.Insert(msg)
+	current := t.Root
+	for _, char := range msg {
+		current.Repr()
+		fmt.Println(char)
+		current = current.Children[char]
+	}
 }

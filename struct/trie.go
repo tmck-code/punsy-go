@@ -3,6 +3,8 @@ package Struct
 import (
 	"fmt"
 	"reflect"
+    "encoding/json"
+	"log"
 )
 
 type Node struct {
@@ -17,23 +19,52 @@ type Trie struct {
 	Root *Node
 }
 
-func (n Node) Insert(s string) {
+func NewTrie() *Trie {
+	return &Trie{
+		Len: 0,
+		Root: NewNode(),
+	}
+}
 
+func NewNode() *Node {
+	return &Node{
+		Children: make(map[rune]*Node, 0),
+		Final: false,
+	}
+}
+
+func (n Node) Repr() {
+    if b, err := json.Marshal(n); err != nil {
+		log.Fatal(err)
+	} else {
+		fmt.Println(string(b))
+	}
+}
+
+func (t Trie) Repr() {
+	current := t.Root
+	for {
+		current.Repr()
+		for _, child := range current.Children {
+			child.Repr()
+		}
+		if current.Final {
+			break
+		}
+	}
 }
 
 func (t Trie) Insert(s string) {
 	current := t.Root
 	for i, char := range s {
 		fmt.Printf("%v, %+v, %v\n", i, char, reflect.TypeOf(char))
-		if _, ok := current.Children[char]; !ok {
-			current.Children[char] = &Node{
-				Value: char,
-				Children: make(map[rune]*Node, 0),
-				Final: false,
-				Data: nil,
-			}
+		if _, ok := current.Children[char]; ok {
+			current = current.Children[char]
+		} else {
+			current.Children[char] = NewNode()
+			current = current.Children[char]
+			current.Value = char
 		}
-		current = current.Children[char]
 	}
 }
 
