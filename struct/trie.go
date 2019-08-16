@@ -41,7 +41,7 @@ func (n Node) Repr() {
 	}
 }
 
-func (t Trie) Insert(s string) {
+func (t Trie) Insert(s string, data interface{}) {
 	current := t.Root
 	for i, char := range s {
 		fmt.Printf("%v, %+v, %v\n", i, char, reflect.TypeOf(char))
@@ -53,6 +53,8 @@ func (t Trie) Insert(s string) {
 			current.Value = char
 		}
 	}
+	current.Final = true
+	current.Data = data
 }
 
 func (t Trie) Get(s string) *Node {

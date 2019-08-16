@@ -9,7 +9,7 @@ func main() {
 	t := Struct.NewTrie()
 	msg := "car"
 	fmt.Println(msg)
-	t.Insert(msg)
+	t.Insert(msg, map[string]string{"key": "val"})
 	current := t.Root
 	for _, char := range msg {
 		current.Repr()
