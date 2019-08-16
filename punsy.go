@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/tmck-code/punsy-go/struct"
 	"fmt"
+	"github.com/tmck-code/punsy-go/struct"
 )
 
 func main() {
@@ -16,6 +16,7 @@ func main() {
 		fmt.Println(char)
 		current = current.Children[char]
 	}
-	n := t.Get("car")
-	fmt.Printf("%+v\n", n)
+	if n, ok := t.Get("car"); ok {
+		fmt.Printf("%+v\n", n)
+	}
 }

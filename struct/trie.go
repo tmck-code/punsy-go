@@ -1,27 +1,27 @@
 package Struct
 
 import (
+	"encoding/json"
 	"fmt"
-	"reflect"
-    "encoding/json"
 	"log"
+	"reflect"
 )
 
 type Node struct {
-	Value rune
+	Value    rune
 	Children map[rune]*Node
-	Final bool
-	Data interface{}
+	Final    bool
+	Data     interface{}
 }
 
 type Trie struct {
-	Len int
+	Len  int
 	Root *Node
 }
 
 func NewTrie() *Trie {
 	return &Trie{
-		Len: 0,
+		Len:  0,
 		Root: NewNode(),
 	}
 }
@@ -29,12 +29,12 @@ func NewTrie() *Trie {
 func NewNode() *Node {
 	return &Node{
 		Children: make(map[rune]*Node, 0),
-		Final: false,
+		Final:    false,
 	}
 }
 
 func (n Node) Repr() {
-    if b, err := json.Marshal(n); err != nil {
+	if b, err := json.Marshal(n); err != nil {
 		log.Fatal(err)
 	} else {
 		fmt.Println(string(b))
@@ -57,14 +57,14 @@ func (t Trie) Insert(s string, data interface{}) {
 	current.Data = data
 }
 
-func (t Trie) Get(s string) *Node {
+func (t Trie) Get(s string) (*Node, bool) {
 	current := t.Root
 	for _, char := range s {
 		if _, ok := current.Children[char]; ok {
 			current = current.Children[char]
 		} else {
-			log.Fatal(s)
+			return nil, false
 		}
 	}
-	return current
+	return current, true
 }
