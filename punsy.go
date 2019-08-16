@@ -17,6 +17,6 @@ func main() {
 		current = current.Children[char]
 	}
 	if n, ok := t.Get("car"); ok {
-		fmt.Printf("%+v\n", n)
+		n.Repr()
 	}
 }
