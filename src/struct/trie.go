@@ -68,3 +68,18 @@ func (t Trie) Get(s string) (*Node, bool) {
 	}
 	return current, true
 }
+
+func (t Trie) GetDescendents(s string) (*Node, bool) {
+	if current, ok := t.Get(s); ok {
+		for {
+			for _, child := range current.Children {
+				fmt.Printf("----- %+v\n", child)
+			}
+			fmt.Printf("+++++++ %+v\n", current)
+			if current.Final {
+				break
+			}
+		}
+	}
+	return nil, false
+}
