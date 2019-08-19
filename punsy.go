@@ -10,12 +10,7 @@ func main() {
 	msg := "car"
 	fmt.Println(msg)
 	t.Insert(msg, map[string]string{"key": "val"})
-	current := t.Root
-	for _, char := range msg {
-		current.Repr()
-		fmt.Println(char)
-		current = current.Children[char]
-	}
+	t.Root.Repr()
 	if n, ok := t.Get("car"); ok {
 		n.Repr()
 	}

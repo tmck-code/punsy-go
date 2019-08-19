@@ -3,15 +3,16 @@ package Struct
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/tidwall/pretty"
 	"log"
 	"reflect"
 )
 
 type Node struct {
 	Value    rune
-	Children map[rune]*Node
 	Final    bool
 	Data     interface{}
+	Children map[rune]*Node
 }
 
 type Trie struct {
@@ -28,8 +29,8 @@ func NewTrie() *Trie {
 
 func NewNode() *Node {
 	return &Node{
-		Children: make(map[rune]*Node, 0),
 		Final:    false,
+		Children: make(map[rune]*Node, 0),
 	}
 }
 
@@ -37,7 +38,7 @@ func (n Node) Repr() {
 	if b, err := json.Marshal(n); err != nil {
 		log.Fatal(err)
 	} else {
-		fmt.Println(string(b))
+		fmt.Println(string(pretty.Color(pretty.Pretty(b), nil)))
 	}
 }
 
