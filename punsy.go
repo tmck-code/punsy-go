@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/tmck-code/punsy-go/src/struct"
 	"github.com/tmck-code/punsy-go/src/dictionary"
+	"github.com/tmck-code/punsy-go/src/struct"
 )
 
 func main() {
@@ -16,11 +16,10 @@ func main() {
 	t.Insert("car", map[string]string{"key": "val"})
 	t.Insert("cars", map[string]string{"keys": "vals"})
 	t.Insert("carousel", map[string]string{"keys": "vals"})
-	fmt.Println(t.Root.Repr())
-	if n, ok := t.Get("car"); ok {
+	if n, ok := t.Get("ART"); ok {
 		fmt.Println(n.Repr())
 		result := n.GetDescendents(1)
-		for _, v := range(result) {
+		for _, v := range result {
 			fmt.Printf("%v\n", v)
 		}
 	}
