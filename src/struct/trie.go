@@ -2,7 +2,6 @@ package Struct
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/tidwall/pretty"
 	"log"
 )
@@ -66,16 +65,20 @@ func (t Trie) Get(s string) (*Node, bool) {
 	return current, true
 }
 
-func (t Trie) GetDescendents(s string) (*Node, bool) {
-	if current, ok := t.Get(s); ok {
-		for {
-			for _, child := range current.Children {
-				fmt.Printf("----- %+v\n", child)
+func (current *Node) GetDescendents(max_depth int) ([]*Node) {
+	results := make([]*Node, 0)
+	if current.Final {
+		results = append(results, current)
+	}
+	for range [5]int{} {
+		for _, child := range(current.Children) {
+			if max_depth > 0 {
+				child.GetDescendents(max_depth-1)
 			}
 			if current.Final {
 				break
 			}
 		}
 	}
-	return nil, false
+	return results
 }
