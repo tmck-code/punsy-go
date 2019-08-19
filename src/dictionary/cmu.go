@@ -17,6 +17,6 @@ func LoadCMU(ifpath string, t *Struct.Trie) {
 		line := scanner.Text()
 		word := strings.SplitN(line, "|", 2)
 		pronunciation := strings.Split(word[1], " ")
-		t.Insert(word[0], pronunciation)
+		t.Insert(pronunciation, word[0])
 	}
 }

@@ -9,7 +9,7 @@ import (
 type Node struct {
 	Final    bool
 	Data     interface{}
-	Children map[rune]*Node
+	Children map[string]*Node
 }
 
 type Trie struct {
@@ -27,7 +27,7 @@ func NewTrie() *Trie {
 func NewNode() *Node {
 	return &Node{
 		Final:    false,
-		Children: make(map[rune]*Node, 0),
+		Children: make(map[string]*Node, 0),
 	}
 }
 
@@ -39,7 +39,7 @@ func (n Node) Repr() string {
 	return string(pretty.Color(pretty.Pretty(b), nil))
 }
 
-func (t Trie) Insert(s string, data interface{}) {
+func (t *Trie) Insert(s []string, data interface{}) {
 	current := t.Root
 	for _, char := range s {
 		if _, ok := current.Children[char]; ok {
@@ -51,9 +51,10 @@ func (t Trie) Insert(s string, data interface{}) {
 	}
 	current.Final = true
 	current.Data = data
+	t.Len += 1
 }
 
-func (t Trie) Get(s string) (*Node, bool) {
+func (t Trie) Get(s []string) (*Node, bool) {
 	current := t.Root
 	for _, char := range s {
 		if _, ok := current.Children[char]; ok {

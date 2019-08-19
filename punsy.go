@@ -12,12 +12,10 @@ func main() {
 	ofpath := "cmudict-0.7b.utf8"
 	// dictionary.DownloadFile(fileUrl, ofpath)
 	dictionary.LoadCMU(ofpath, t)
+	fmt.Println(t.Len)
 
-	t.Insert("car", map[string]string{"key": "val"})
-	t.Insert("cars", map[string]string{"keys": "vals"})
-	t.Insert("carousel", map[string]string{"keys": "vals"})
-	if n, ok := t.Get("ART"); ok {
-		fmt.Println(n.Repr())
+	if n, ok := t.Get([]string{"AE1", "K", "R", "AH0"}); ok {
+		fmt.Println("found: ", n.Repr())
 		result := n.GetDescendents(1)
 		for _, v := range result {
 			fmt.Printf("%v\n", v)
