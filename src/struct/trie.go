@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"github.com/tidwall/pretty"
 	"log"
-	"reflect"
 )
 
 type Node struct {
-	Value    rune
 	Final    bool
 	Data     interface{}
 	Children map[rune]*Node
@@ -34,24 +32,22 @@ func NewNode() *Node {
 	}
 }
 
-func (n Node) Repr() {
-	if b, err := json.Marshal(n); err != nil {
+func (n Node) Repr() string {
+	b, err := json.Marshal(n)
+	if err != nil {
 		log.Fatal(err)
-	} else {
-		fmt.Println(string(pretty.Color(pretty.Pretty(b), nil)))
 	}
+	return string(pretty.Color(pretty.Pretty(b), nil))
 }
 
 func (t Trie) Insert(s string, data interface{}) {
 	current := t.Root
-	for i, char := range s {
-		fmt.Printf("%v, %+v, %v\n", i, char, reflect.TypeOf(char))
+	for _, char := range s {
 		if _, ok := current.Children[char]; ok {
 			current = current.Children[char]
 		} else {
 			current.Children[char] = NewNode()
 			current = current.Children[char]
-			current.Value = char
 		}
 	}
 	current.Final = true
@@ -76,7 +72,6 @@ func (t Trie) GetDescendents(s string) (*Node, bool) {
 			for _, child := range current.Children {
 				fmt.Printf("----- %+v\n", child)
 			}
-			fmt.Printf("+++++++ %+v\n", current)
 			if current.Final {
 				break
 			}
