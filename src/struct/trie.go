@@ -66,15 +66,15 @@ func (t Trie) Get(s []string) (*Node, bool) {
 	return current, true
 }
 
-func (current *Node) GetDescendents(max_depth int) ([]*Node) {
+func (current *Node) GetDescendents(max_depth int) []*Node {
 	results := make([]*Node, 0)
 	if current.Final {
 		results = append(results, current)
 	}
 	for range [5]int{} {
-		for _, child := range(current.Children) {
+		for _, child := range current.Children {
 			if max_depth > 0 {
-				child.GetDescendents(max_depth-1)
+				child.GetDescendents(max_depth - 1)
 			}
 			if current.Final {
 				break
@@ -84,19 +84,14 @@ func (current *Node) GetDescendents(max_depth int) ([]*Node) {
 	return results
 }
 
-func (current *Node) GetDescendentsData(max_depth int) ([]interface{}) {
+func (current *Node) GetDescendentsData(max_depth int) []interface{} {
 	results := make([]interface{}, 0)
 	if current.Final {
 		results = append(results, current.Data)
 	}
-	for range [5]int{} {
-		for _, child := range(current.Children) {
-			if max_depth > 0 {
-				child.GetDescendents(max_depth-1)
-			}
-			if current.Final {
-				break
-			}
+	if max_depth >= 0 {
+		for _, child := range current.Children {
+			child.GetDescendents(max_depth - 1)
 		}
 	}
 	return results
