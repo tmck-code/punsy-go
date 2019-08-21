@@ -19,6 +19,6 @@ func main() {
 	result := c.GetPronunciation(msg)
 	fmt.Println(result)
 	if rhyme, ok := c.Rhymes.Get(result); ok {
-		fmt.Println(rhyme.Data))
+		fmt.Println(rhyme.Data)
 	}
 }
