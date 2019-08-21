@@ -7,7 +7,19 @@ import (
 	"strings"
 )
 
-func LoadCMU(ifpath string, t *Struct.Trie) {
+type CMU struct {
+	Pronunciations map[string]string
+	Rhymes *Struct.Trie
+}
+
+func NewCMU() *CMU {
+	return &CMU{
+		Pronunciations: make(map[string]string, 0),
+		Rhymes: Struct.NewTrie(),
+	}
+}
+
+func LoadCMU(ifpath string, c *CMU) {
 	in, _ := os.Open(ifpath)
 	defer in.Close()
 
@@ -17,6 +29,6 @@ func LoadCMU(ifpath string, t *Struct.Trie) {
 		line := scanner.Text()
 		word := strings.SplitN(line, "|", 2)
 		pronunciation := strings.Split(word[1], " ")
-		t.Insert(pronunciation, word[0])
+		c.Rhymes.Insert(pronunciation, word[0])
 	}
 }
