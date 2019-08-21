@@ -6,19 +6,14 @@ import (
 )
 
 func main() {
-	c := dictionary.NewCMU()
 	// fileUrl := "http://svn.code.sf.net/p/cmusphinx/code/trunk/cmudict/cmudict-0.7b"
-	ofpath := "cmudict-0.7b.utf8"
 	// dictionary.DownloadFile(fileUrl, ofpath)
+
+	c := dictionary.NewCMU()
+	ofpath := "cmudict-0.7b.utf8"
 	dictionary.LoadCMU(ofpath, c)
 
-	// msg := "hello world"
-
-	if n, ok := c.Rhymes.Get([]string{"AE1", "K", "R", "AH0"}); ok {
-		fmt.Println("found: ", n.Repr())
-		result := n.GetDescendents(1)
-		for _, v := range result {
-			fmt.Printf("%v\n", v)
-		}
-	}
+	msg := "world"
+	result := c.GetPronunciation(msg)
+	fmt.Println(result)
 }

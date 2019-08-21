@@ -8,13 +8,13 @@ import (
 )
 
 type CMU struct {
-	Pronunciations map[string]string
+	Pronunciations map[string][]string
 	Rhymes *Struct.Trie
 }
 
 func NewCMU() *CMU {
 	return &CMU{
-		Pronunciations: make(map[string]string, 0),
+		Pronunciations: make(map[string][]string, 0),
 		Rhymes: Struct.NewTrie(),
 	}
 }
@@ -30,5 +30,15 @@ func LoadCMU(ifpath string, c *CMU) {
 		word := strings.SplitN(line, "|", 2)
 		pronunciation := strings.Split(word[1], " ")
 		c.Rhymes.Insert(pronunciation, word[0])
+		c.Pronunciations[word[0]] = pronunciation
+	}
+}
+
+func (c *CMU) GetPronunciation(s string) []string {
+	s = strings.ToUpper(s)
+	if el, ok := c.Pronunciations[s]; ok {
+		return el
+	} else {
+		return []string{""}
 	}
 }
