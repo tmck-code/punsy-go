@@ -31,7 +31,7 @@ func NewNode() *Node {
 	}
 }
 
-func (n Node) Repr() string {
+func (n Node) String() string {
 	b, err := json.Marshal(n)
 	if err != nil {
 		log.Fatal(err)
