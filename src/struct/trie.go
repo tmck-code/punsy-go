@@ -31,7 +31,7 @@ func NewNode() *Node {
 	}
 }
 
-func (n Node) String() string {
+func (n Node) Repr() string {
 	b, err := json.Marshal(n)
 	if err != nil {
 		log.Fatal(err)
@@ -70,6 +70,24 @@ func (current *Node) GetDescendents(max_depth int) ([]*Node) {
 	results := make([]*Node, 0)
 	if current.Final {
 		results = append(results, current)
+	}
+	for range [5]int{} {
+		for _, child := range(current.Children) {
+			if max_depth > 0 {
+				child.GetDescendents(max_depth-1)
+			}
+			if current.Final {
+				break
+			}
+		}
+	}
+	return results
+}
+
+func (current *Node) GetDescendentsData(max_depth int) ([]interface{}) {
+	results := make([]interface{}, 0)
+	if current.Final {
+		results = append(results, current.Data)
 	}
 	for range [5]int{} {
 		for _, child := range(current.Children) {
