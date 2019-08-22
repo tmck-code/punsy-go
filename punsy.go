@@ -20,12 +20,7 @@ func main() {
 	fmt.Println("pronunciation:", result)
 	if rhyme, ok := c.Rhymes.Get(result); ok {
 		fmt.Println(rhyme)
-		rhymes := rhyme.GetDescendents(2)
-		for _, el := range rhymes {
-			fmt.Printf("%+v\n", el)
-			// fmt.Println(el.Repr())
-		}
-		data := rhyme.GetDescendentsData(10)
+		data := rhyme.GetDescendentsData(10, make([]interface{}, 0))
 		fmt.Println(data)
 	}
 }
