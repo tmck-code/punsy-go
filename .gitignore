@@ -13,3 +13,9 @@
 
 # Vim swap files
 *.swp
+
+# Compiled executables
+punsy
+
+# Raw CMU dictionary files
+cmudict-*
