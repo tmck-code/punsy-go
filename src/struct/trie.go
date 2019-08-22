@@ -8,7 +8,7 @@ import (
 
 type Node struct {
 	Final    bool
-	Data     interface{}
+	Data     []interface{}
 	Children map[string]*Node
 }
 
@@ -47,10 +47,11 @@ func (t *Trie) Insert(s []string, data interface{}) {
 		} else {
 			current.Children[char] = NewNode()
 			current = current.Children[char]
+			current.Data = make([]interface{}, 0)
 		}
 	}
 	current.Final = true
-	current.Data = data
+	current.Data = append(current.Data, data)
 	t.Len += 1
 }
 
