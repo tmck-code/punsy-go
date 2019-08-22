@@ -72,7 +72,7 @@ func (current *Node) GetDescendentsData(max_depth int, results []interface{}) []
 	}
 	if max_depth >= 0 {
 		for _, child := range current.Children {
-			child.GetDescendentsData(max_depth - 1, results)
+			return child.GetDescendentsData(max_depth-1, results)
 		}
 	}
 	return results
