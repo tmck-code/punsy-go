@@ -29,8 +29,9 @@ func LoadCMU(ifpath string, c *CMU) {
 		line := scanner.Text()
 		word := strings.SplitN(line, "|", 2)
 		pronunciation := strings.Split(word[1], " ")
-		c.Rhymes.Insert(reverse(pronunciation), word[0])
+
 		c.Pronunciations[word[0]] = pronunciation
+		c.Rhymes.Insert(reverse(pronunciation), word[0])
 	}
 }
 
@@ -44,13 +45,16 @@ func (c *CMU) GetPronunciation(s string) []string {
 }
 
 func (c *CMU) GetRhymes(s []string) ([]interface{}, bool) {
-	if rhyme, ok := c.Rhymes.Get(s); ok {
+	if rhyme, ok := c.Rhymes.Get(reverse(s)); ok {
 		return Struct.GetDescendentsData(*rhyme, 10), ok
 	}
 	return nil, false
 }
 
-func reverse(a []string) []string {
+func reverse(l []string) []string {
+	// make a copy of the slice to reverse
+	a := append([]string(nil), l...)
+
 	for i := len(a)/2 - 1; i >= 0; i-- {
 		opp := len(a) - 1 - i
 		a[i], a[opp] = a[opp], a[i]
