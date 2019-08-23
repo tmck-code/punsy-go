@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/tmck-code/punsy-go/src/dictionary"
-	"github.com/tmck-code/punsy-go/src/struct"
 	"os"
 )
 
@@ -19,8 +18,7 @@ func main() {
 	msg := args[0]
 	result := c.GetPronunciation(msg)
 	fmt.Println("pronunciation:", result)
-	if rhyme, ok := c.Rhymes.Get(result); ok {
-		data := Struct.GetDescendentsData(*rhyme, 10)
-		fmt.Println(len(data), data)
+	if result, ok := c.GetRhymes(result); ok {
+		fmt.Println(len(result), result)
 	}
 }
