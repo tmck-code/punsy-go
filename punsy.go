@@ -20,9 +20,7 @@ func main() {
 	result := c.GetPronunciation(msg)
 	fmt.Println("pronunciation:", result)
 	if rhyme, ok := c.Rhymes.Get(result); ok {
-		fmt.Println(rhyme)
 		data := Struct.GetDescendentsData(*rhyme, 10, make([]interface{}, 0))
-		fmt.Println(rhyme.Repr())
-		fmt.Println(data)
+		fmt.Println(len(data), data)
 	}
 }

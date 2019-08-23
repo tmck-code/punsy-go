@@ -2,7 +2,6 @@ package Struct
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/tidwall/pretty"
 	"log"
 )
@@ -69,15 +68,16 @@ func (t Trie) Get(s []string) (*Node, bool) {
 }
 
 func GetDescendentsData(current Node, max_depth int, results []interface{}) []interface{} {
-	fmt.Println("=", max_depth, current.Final, current.Data, results)
 	if current.Final {
 		results = append(results, current.Data...)
 	}
-	if max_depth > 0 {
+	if max_depth > 0 && len(current.Children) > 0 {
 		for _, child := range current.Children {
-			GetDescendentsData(*child, max_depth-1, results)
+			results = append(
+				results,
+				GetDescendentsData(*child, max_depth-1, make([]interface{}, 0))...,
+			)
 		}
 	}
-	fmt.Println("!! reached end:", results, max_depth, max_depth > 0)
 	return results
 }
