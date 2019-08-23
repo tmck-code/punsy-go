@@ -67,7 +67,8 @@ func (t Trie) Get(s []string) (*Node, bool) {
 	return current, true
 }
 
-func GetDescendentsData(current Node, max_depth int, results []interface{}) []interface{} {
+func GetDescendentsData(current Node, max_depth int) []interface{} {
+	results := make([]interface{}, 0)
 	if current.Final {
 		results = append(results, current.Data...)
 	}
@@ -75,7 +76,7 @@ func GetDescendentsData(current Node, max_depth int, results []interface{}) []in
 		for _, child := range current.Children {
 			results = append(
 				results,
-				GetDescendentsData(*child, max_depth-1, make([]interface{}, 0))...,
+				GetDescendentsData(*child, max_depth-1)...,
 			)
 		}
 	}
