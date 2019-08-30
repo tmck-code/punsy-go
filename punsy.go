@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/tmck-code/go-colours"
 	"github.com/tmck-code/punsy-go/src/dictionary"
 	"math/rand"
 	"os"
@@ -22,20 +23,20 @@ func main() {
 	dictionary.LoadCMU(ofpath, c)
 
 	parts := strings.Split(msg, " ")
-	fmt.Println("parts:", parts)
+	Colours.CPrintln(Colours.Green, fmt.Sprint("parts:\t", parts))
 
 	word := parts[len(parts)-1]
-	fmt.Println("word:", word)
+	fmt.Println("word:\t", word)
 
 	pron := c.GetPronunciation(word)
-	fmt.Println("pronunciation:", word, pron)
+	fmt.Println("pronunciation:\t", word, pron, pron[offset:])
 	pron = pron[offset:]
 
 	if results, ok := c.GetRhymes(pron); ok {
-		fmt.Println("rhymes:", len(results), results)
+		fmt.Println("rhymes:\t", len(results), results)
 		choice := results[rand.Int()%len(results)].(string)
-		fmt.Println("choice:", choice)
+		fmt.Println("choice:\t", choice)
 		parts[len(parts)-1] = choice
 	}
-	fmt.Println("pun:", strings.Join(parts, " "))
+	fmt.Println("pun:\t", strings.Join(parts, " "))
 }
